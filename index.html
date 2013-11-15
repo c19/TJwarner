@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>同济电费用尽预警</title>
+</head>
+<body>
+<form name="input" action="submit" method="post">
+	<select name="district" >
+		<option value="嘉定校区">嘉定校区</option>
+		<option selected="selected" value="四平校区">四平校区</option>
+		<option value="四平校区（2）">四平校区（2）</option>
+		<option value="彰武校区">彰武校区</option>
+		<option value="沪北校区">沪北校区</option>
+		<option value="沪西校区">沪西校区</option>
+	</select>
+	<select name="building">
+		<option value="赤峰路后勤2">赤峰路后勤2</option>
+		<option value="后勤工寓    ">后勤工寓    </option>
+		<option value="后勤公寓三相">后勤公寓三相</option>
+		<option value="解放楼      ">解放楼      </option>
+		<option value="青年楼      ">青年楼      </option>
+		<option value="西北二楼    ">西北二楼    </option>
+		<option value="西北三楼    ">西北三楼    </option>
+		<option value="西北四楼    ">西北四楼    </option>
+		<option value="西北五楼    ">西北五楼    </option>
+		<option value="西北一楼    ">西北一楼    </option>
+		<option selected="selected" value="西南八楼    ">西南八楼    </option>
+		<option value="西南二楼    ">西南二楼    </option>
+		<option value="西南九楼    ">西南九楼    </option>
+		<option value="西南七楼    ">西南七楼    </option>
+		<option value="西南三楼    ">西南三楼    </option>
+		<option value="西南十二楼  ">西南十二楼  </option>
+		<option value="西南十楼A楼">西南十楼A楼</option>
+		<option value="西南十楼B楼">西南十楼B楼</option>
+		<option value="西南十一楼  ">西南十一楼  </option>
+		<option value="西南一楼    ">西南一楼    </option>
+		<option value="学三楼      ">学三楼      </option>
+		<option value="学四楼      ">学四楼      </option>
+		<option value="学五楼      ">学五楼      </option>
+		<option value="研究生公寓3 ">研究生公寓3 </option>
+		<option value="研究生公寓4">研究生公寓4</option>
+		<option value="研究生公寓4">研究生公寓4</option>
+		<option value="研究生公寓5">研究生公寓5</option>
+		<option value="研究生公寓5">研究生公寓5</option>
+	</select>
+	房号: <input name="room"></input>
+	剩余电量小于 <input name="threshold"></input> 时发邮件给 <input name="email"></input>
+	<input type="submit" value="Submit">
+</form>
+</body>
+</html>
