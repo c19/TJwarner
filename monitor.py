@@ -73,5 +73,5 @@ class Monitor(Webdumper):
         self.validers = {valider: self._get_valider(valider) for valider in self.validers.keys()}
 
 
-monitor = Monitor(proxy={'http':'127.0.0.1:8888'})
+monitor = Monitor()
 myroom = Room((u'四平校区',u'西南八楼    ',u'322'),email='classone2010@gmail.com') #the spaces are neccessary..

@@ -12,11 +12,21 @@ import pdb
 urls = (
         '/', 'index',  #only for testing
         '/submit', 'submit',
+        '/success', 'success',
+        '/fail', 'fail',
         )
 
 class index:
     def GET(self):
         return open('index.html').read()
+
+class success:
+    def GET(self):
+        return '请查看邮件'
+
+class fail:
+    def GET(self):
+        return '出错了，我也不知道怎么回事，如果你想，可以发邮件到classone2010@gmail.com抱怨。'
 
 class submit:
     """room = Room(('四平校区','西南八楼    ','322'),email='classone2010@gmail.com')"""
