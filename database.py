@@ -6,6 +6,8 @@
 from pymongo import MongoClient
 from copy import deepcopy
 
+import pdb
+
 class MyDict(dict):
     def __getattr__(self, key):
         return self[key]
@@ -25,20 +27,22 @@ class DBdict(MyDict):
         DB.save(self)
 
 class Room(DBdict):
-	"""{'threshold':10,'format':('四平校区','西南八楼','322')}"""
-	colname = 'rooms'
-	def __init__(self, *arg, **kwarg):
-		super(Room, self).__init__(self, *arg, **kwarg)
-		self['addr'] = ''.join(self['format'])
-	structure = {
-				 'format': (),
-				 'threshold': 10,
-				 'email':  [],
-				 'addr':   '',
-				}
+    """{'threshold':10,'addr':{'DistrictDown':u'四平校区', 'BuildingDown':u'西南八楼    ','RoomnameText':u'322'}}"""
+    colname = 'rooms'
+    def __init__(self, *arg, **kwarg):
+        super(Room, self).__init__(self, *arg, **kwarg)
+        if arg and len(*arg)==3: 
+            self.update({'addr': dict(zip(('DistrictDown','BuildingDown','RoomnameText'),*arg))})
+        self['addrindex'] = ''.join(sorted(self['addr'].values()))
+    structure = {
+                 'addr': {},
+                 'threshold': 10,
+                 'email':  [],
+                 'addrindex':   '',
+                }
 
-class DB:
-    indexs = {'rooms':[{'key':[('addr',1)], 'unique':True}]}
+class DB(object):
+    indexs = {'rooms':[{'key':[('addrindex',1)], 'unique':True}]}
     conn = MongoClient()
     @classmethod
     def connect(cls):
@@ -46,7 +50,7 @@ class DB:
         for col in cls.indexs.keys():
             try:
                 cls.db.create_collection(col,autoIndexId = False)
-            except Exception:
+            except Exception,e:
                 pass
         cls.cols = {colname:cls.db[colname] for colname in cls.indexs.keys()}
         cls.ensure_index()
@@ -60,7 +64,7 @@ class DB:
                 cls.cols[colname].ensure_index(key,**kwarg)
     @classmethod
     def save(cls,obj,key=None):
-        key = {'addr':obj.addr} if key is None else key
+        key = {'addr':obj.addrindex} if key is None else key
         #update(self, spec, document, upsert=False, manipulate=False, safe=None, multi=False, check_keys=True, **kwargs)
         cls.cols[obj.colname].update(key, obj, upsert=True, check_keys=False, safe=False, manipulate=False)
 DB.connect()
