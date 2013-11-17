@@ -61,3 +61,14 @@ districts = {
 	<option value="第三宿舍    ">第三宿舍    </option>
 	<option value="第一宿舍    ">第一宿舍    </option>",
 }
+
+function bind( obj, type, fn ) {       
+if ( obj.attachEvent ) {       
+obj['e'+type+fn] = fn;       
+obj[type+fn] = function(){obj['e'+type+fn]( window.event );}       
+obj.attachEvent( 'on'+type, obj[type+fn] );       
+} else       
+obj.addEventListener( type, fn, false );       
+}
+
+bind(district,'change',function(){})

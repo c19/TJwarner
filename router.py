@@ -49,7 +49,7 @@ class submit:
         web.SeeOther('/success')
     def check(self,inputs):
         #pdb.set_trace()
-        #try:
+        try:
             arg1 = inputs['district'][:33].encode('utf-8')
             arg2 = inputs['building'][:33].encode('utf-8')
             arg3 = inputs['room'][:33].encode('utf-8')
@@ -57,8 +57,8 @@ class submit:
             threshold = int(inputs['threshold'])
             room = Room((arg1,arg2,arg3), threshold=threshold, email=email)
             return room
-        #except Exception, e:
-        #    web.SeeOther('/fail')
+        except Exception, e:
+            web.SeeOther('/fail')
 
 app = web.application(urls, globals())
 if __name__ == "__main__":

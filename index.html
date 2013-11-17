@@ -3,17 +3,17 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<title>同济电费用尽预警</title>
-	<script type="text/javascript" src="./page.js" ></script>>
+	<script type="text/javascript" src="./page.js" ></script>
 </head>
 <body>
 <form name="input" action="submit" method="post">
 	<select name="district" >
-		<option value="嘉定校区">嘉定校区</option>
-		<option selected="selected" value="四平校区">四平校区</option>
-		<option value="四平校区（2）">四平校区（2）</option>
-		<option value="彰武校区">彰武校区</option>
-		<option value="沪北校区">沪北校区</option>
-		<option value="沪西校区">沪西校区</option>
+		<option key="jiading" value="嘉定校区">嘉定校区</option>
+		<option key="siping" selected="selected" value="四平校区">四平校区</option>
+		<option key="siping2" value="四平校区（2）">四平校区（2）</option>
+		<option key="zhangwu" value="彰武校区">彰武校区</option>
+		<option key="hubei" value="沪北校区">沪北校区</option>
+		<option key="huxi" value="沪西校区">沪西校区</option>
 	</select>
 	<select name="building">
 		<option value="赤峰路后勤2">赤峰路后勤2</option>
@@ -49,5 +49,15 @@
 	剩余电量小于 <input name="threshold" value="10"></input> Kwh时发邮件给 <input name="email"></input>
 	<input type="submit" value="Submit">
 </form>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-33228021-3', 'caoyijun.com');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
