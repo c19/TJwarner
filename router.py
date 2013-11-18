@@ -46,12 +46,13 @@ class submit:
         #    return
         web.SeeOther('/success')
     def check(self,inputs):
-        
         try:
+            args = (inputs['building'][:33], inputs['room'][:33], inputs['district'][:33])
+            args = [arg if isinstance(arg,unicode) else arg.decode('utf-8') for arg in args]
             room = { "threshold" : int(inputs['threshold']),
-                     "addr" : { "BuildingDown" : inputs['building'][:33],
-                                "RoomnameText" : inputs['room'][:33],
-                                "DistrictDown" : inputs['district'][:33]
+                     "addr" : { "BuildingDown" : args[0],
+                                "RoomnameText" : args[1],
+                                "DistrictDown" : args[2],
                                 },
                      "email" : inputs['email'][:120] }
             room = Room(room)
