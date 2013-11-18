@@ -35,15 +35,15 @@ class submit:
     def POST(self):
         room = self.check(web.input())
         print(room)
-        try:
-            balance = monitor.check_balance(room)
-            sendmail(room.email, u'{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
-                     u'电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
-                    )
-            room.save()
-        except Exception, e:
-            web.SeeOther('/fail')
-            return
+        #try:
+        balance = monitor.check_balance(room)
+        sendmail(room.email, u'{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
+                 u'电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
+                )
+        room.save()
+        #except Exception, e:
+        #    web.SeeOther('/fail')
+        #    return
         web.SeeOther('/success')
     def check(self,inputs):
         
