@@ -4,7 +4,7 @@
 #    C19<classone2010@gmail.com>
 
 import web
-from database import DB,Room
+from database import Room
 from monitor  import monitor
 from sendmail import sendmail
 import pdb
@@ -32,30 +32,28 @@ class fail:
         return u'出错了，我也不知道怎么回事，如果你想，可以发邮件到classone2010@gmail.com抱怨。'.encode('utf-8')
 
 class submit:
-    """room = Room(('四平校区','西南八楼    ','322'),email='classone2010@gmail.com')"""
     def POST(self):
         room = self.check(web.input())
         print(room)
         try:
-            #pdb.set_trace()
-            fee = monitor.get_fee(room)
-            sendmail(room.email, '{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], fee),
+            balance = monitor.get_balance(room)
+            sendmail(room.email, '{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
                      '电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
                     )
             room.save()
         except Exception, e:
             web.SeeOther('/fail')
-            #raise e
         web.SeeOther('/success')
     def check(self,inputs):
-        #pdb.set_trace()
+        
         try:
-            arg1 = inputs['district'][:33].encode('utf-8')
-            arg2 = inputs['building'][:33].encode('utf-8')
-            arg3 = inputs['room'][:33].encode('utf-8')
-            email= inputs['email'][:120]
-            threshold = int(inputs['threshold'])
-            room = Room((arg1,arg2,arg3), threshold=threshold, email=email)
+            room = { "threshold" : int(inputs['threshold']),
+                     "addr" : { "BuildingDown" : inputs['building'][:33].encode('utf-8'),
+                                "RoomnameText" : inputs['room'][:33].encode('utf-8'),
+                                "DistrictDown" : inputs['district'][:33].encode('utf-8')
+                                },
+                     "email" : inputs['email'][:120] }
+            room = Room(room)
             return room
         except Exception, e:
             web.SeeOther('/fail')

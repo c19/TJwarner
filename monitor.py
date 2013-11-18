@@ -9,7 +9,9 @@ from webdumper import Webdumper
 from sendmail  import sendmail
 #from lxml import etree
 import re
-from database import DB,Room
+from database import Room
+from datetime import datetime as time
+import datetime
 import pdb
 
 class Monitor(Webdumper):
@@ -31,31 +33,41 @@ class Monitor(Webdumper):
         html = super(Monitor, self).get(url, data)
         self.get_validers()
         return html
-    def get_fee(self,rooms):
+    def check_all(self):
+        cursor = Room.find()
+        #cursor = cursor.batch_size(10)
+        for room in cursor:
+            self.get_balance(room)
+    def get_balance(self,rooms):
         if isinstance(rooms,list):
             for room in rooms:
-                self.get_fee(room)
+                if room.has_key('last_check') and time.utcnow() - one.last_check >= datetime.timedelta(days=1):
+                    self.get_balance(room)
         else:
             self.get(self.url)
+            data = urlencode(dict(self.validers.items() + [('DistrictDown',rooms.addr['DistrictDown'].encode('utf-8'))]))
             #pdb.set_trace()
-            data = urlencode(dict(self.validers.items() + [('DistrictDown',rooms.addr['DistrictDown'])]))
             self.get(self.url, data)
             #try:
             #sorry for the ugly code, the page is incredibly awful and strange,
             #it has to post a long nonsence __VIEWSTATE and html was full of 
             #tables, somehow lxml.etree coudn't parse correctly.
-            data = urlencode(dict(self.validers.items() + rooms.addr.items() + [('Submit','查询')]))
+            #en, urlencode only accepts utf8, and i'm too lazy to change the database.
+            data = urlencode(dict(self.validers.items() + zip(rooms.addr.keys(),[a.encode('utf-8') for a in rooms.addr.values()]) + [('Submit','查询')]))
             #data = data.replace('=','%3d').replace('&','%26')  #quick fix, sorry for this but the server only accept this way,at the post.
             #print(data)
             html = self.get(self.url, data)
             n    = html.find('剩余电量（kWh）</th>')
             table= html[n:n+400]
             cells= re.findall(re.compile('<td>(.*?)</td>'),table)
-            fee = cells[3]
-            fee = float(fee)
-            if fee < rooms.threshold:
-                sendmail(rooms.email, '{0}{1}快没电费啦！！！'.format(rooms.addr['BuildingDown'],rooms.addr['RoomnameText']), '还剩{0}Kwh =w='.format(fee))
-            return fee
+            balance = cells[3]
+            balance = float(balance)
+            if balance < rooms.threshold:
+                sendmail(rooms.email, '{0}{1}快没电费啦！！！'.format(rooms.addr['BuildingDown'],rooms.addr['RoomnameText']), '还剩{0}Kwh =w='.format(balance))
+            rooms['balance'] = balance
+            rooms['last_check'] = time.utcnow()
+            rooms.save()
+            return balance
             '''except HTTPError, e:
                 if e.getcode() == 500:
                     self.get_validers()
@@ -72,6 +84,8 @@ class Monitor(Webdumper):
         #html = self.get(self.url)
         self.validers = {valider: self._get_valider(valider) for valider in self.validers.keys()}
 
-
 monitor = Monitor()
-myroom = Room((u'四平校区',u'西南八楼    ',u'322'),email='classone2010@gmail.com') #the spaces are neccessary..
+myroom = { "threshold" : 10, "addrindex" : u"322四平校区西南八楼    ",
+           "addr" : { "BuildingDown" : u"西南八楼    ", u"RoomnameText" : "322", "DistrictDown" : u"四平校区" },
+           "email" : "classone2010@gmail.com" }
+myroom = Room(myroom)

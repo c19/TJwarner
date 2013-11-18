@@ -1,5 +1,5 @@
 districts = {
-	"jiading":"
+	"jiading":'
 	<option value="07号公寓    ">07号公寓    </option>
 	<option value="08号公寓    ">08号公寓    </option>
 	<option value="09号公寓    ">09号公寓    </option>
@@ -17,8 +17,8 @@ districts = {
 	<option value="本科5       ">本科5       </option>
 	<option value="本科6       ">本科6       </option>
 	<option value="研究2       ">研究2       </option>
-	<option value="研究3       ">研究3       </option>",
-	"siping":"
+	<option value="研究3       ">研究3       </option>',
+	"siping":'
 	<option value="赤峰路后勤2">赤峰路后勤2</option>
 	<option value="后勤工寓    ">后勤工寓    </option>
 	<option value="后勤公寓三相">后勤公寓三相</option>
@@ -44,22 +44,22 @@ districts = {
 	<option value="学五楼      ">学五楼      </option>
 	<option value="研究生公寓3 ">研究生公寓3 </option>
 	<option value="研究生公寓4">研究生公寓4</option>
-	<option value="研究生公寓5">研究生公寓5</option>",
-	"siping2":"
+	<option value="研究生公寓5">研究生公寓5</option>',
+	"siping2":'
 	<option value="行政北楼    ">行政北楼    </option>
-	<option value="行政南楼    ">行政南楼    </option>",
-	"zhangwu":"
+	<option value="行政南楼    ">行政南楼    </option>',
+	"zhangwu":'
 	<option value="1号楼       ">1号楼       </option>
 	<option value="2号楼       ">2号楼       </option>
 	<option value="3号楼       ">3号楼       </option>
 	<option value="4号楼       ">4号楼       </option>
 	<option value="5号楼       ">5号楼       </option>
 	<option value="6号楼       ">6号楼       </option>
-	<option value="7号楼       ">7号楼       </option>",
-	"hubei":"
+	<option value="7号楼       ">7号楼       </option>',
+	"hubei":'
 	<option value="第二宿舍    ">第二宿舍    </option>
 	<option value="第三宿舍    ">第三宿舍    </option>
-	<option value="第一宿舍    ">第一宿舍    </option>",
+	<option value="第一宿舍    ">第一宿舍    </option>',
 }
 
 function bind( obj, type, fn ) {       
