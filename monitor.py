@@ -35,14 +35,14 @@ class Monitor(Webdumper):
         return html
     def check_all(self):
         cursor = Room.find()
-        #cursor = cursor.batch_size(10)
+        cursor = cursor.batch_size(5)
         for room in cursor:
-            self.get_balance(room)
-    def get_balance(self,rooms):
+            if room.has_key('last_check') and time.utcnow() - room.last_check < datetime.timedelta(days=1):
+                self.check_balance(room)
+    def check_balance(self,rooms):
         if isinstance(rooms,list):
             for room in rooms:
-                if room.has_key('last_check') and time.utcnow() - one.last_check >= datetime.timedelta(days=1):
-                    self.get_balance(room)
+                    self.check_balance(room)
         else:
             self.get(self.url)
             data = urlencode(dict(self.validers.items() + [('DistrictDown',rooms.addr['DistrictDown'].encode('utf-8'))]))

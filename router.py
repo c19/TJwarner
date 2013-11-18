@@ -36,21 +36,22 @@ class submit:
         room = self.check(web.input())
         print(room)
         try:
-            balance = monitor.get_balance(room)
-            sendmail(room.email, '{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
-                     '电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
+            balance = monitor.check_balance(room)
+            sendmail(room.email, u'{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
+                     u'电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
                     )
             room.save()
         except Exception, e:
             web.SeeOther('/fail')
+            return
         web.SeeOther('/success')
     def check(self,inputs):
         
         try:
             room = { "threshold" : int(inputs['threshold']),
-                     "addr" : { "BuildingDown" : inputs['building'][:33].encode('utf-8'),
-                                "RoomnameText" : inputs['room'][:33].encode('utf-8'),
-                                "DistrictDown" : inputs['district'][:33].encode('utf-8')
+                     "addr" : { "BuildingDown" : inputs['building'][:33],
+                                "RoomnameText" : inputs['room'][:33],
+                                "DistrictDown" : inputs['district'][:33]
                                 },
                      "email" : inputs['email'][:120] }
             room = Room(room)
