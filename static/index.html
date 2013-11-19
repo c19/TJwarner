@@ -3,7 +3,9 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<title>同济电费用尽预警</title>
-	<script type="text/javascript" src="./page.js" ></script>
+	<style type="text/css">
+	.hide {display: none;}
+	</style>
 </head>
 <body>
 <form name="input" action="submit" method="post">
@@ -13,9 +15,8 @@
 		<option key="siping2" value="四平校区（2）">四平校区（2）</option>
 		<option key="zhangwu" value="彰武校区">彰武校区</option>
 		<option key="hubei" value="沪北校区">沪北校区</option>
-		<option key="huxi" value="沪西校区">沪西校区</option>
 	</select>
-	<select id="jiading">
+	<select class="hide" id="嘉定校区">
 		<option value="07号公寓    ">07号公寓    </option>
 		<option value="08号公寓    ">08号公寓    </option>
 		<option value="09号公寓    ">09号公寓    </option>
@@ -35,7 +36,7 @@
 		<option value="研究2       ">研究2       </option>
 		<option value="研究3       ">研究3       </option>
 	</select>
-		<select name="building" id="siping">
+		<select name="building" id="四平校区">
 		<option value="赤峰路后勤2">赤峰路后勤2</option>
 		<option value="后勤工寓    ">后勤工寓    </option>
 		<option value="后勤公寓三相">后勤公寓三相</option>
@@ -63,15 +64,31 @@
 		<option value="研究生公寓4">研究生公寓4</option>
 		<option value="研究生公寓5">研究生公寓5</option>
 	</select>
-	<select id="siping2">
+	<select class="hide" id="四平校区（2）">
 		<option value="行政北楼    ">行政北楼    </option>
 		<option value="行政南楼    ">行政南楼    </option>
 	</select>
-	<select ></select>
+	<select class="hide" id="彰武校区">
+		<option value="1号楼       ">1号楼       </option>
+		<option value="2号楼       ">2号楼       </option>
+		<option value="3号楼       ">3号楼       </option>
+		<option value="4号楼       ">4号楼       </option>
+		<option value="5号楼       ">5号楼       </option>
+		<option value="6号楼       ">6号楼       </option>
+		<option value="7号楼       ">7号楼       </option>
+	</select>
+	<select class="hide" id="沪北校区">
+		<option value="第二宿舍    ">第二宿舍    </option>
+		<option value="第三宿舍    ">第三宿舍    </option>
+		<option value="第一宿舍    ">第一宿舍    </option>
+	</select>
 	房号: <input name="room"></input>
 	剩余电量小于 <input name="threshold" value="10"></input> Kwh时发邮件给 <input name="email"></input>
 	<input type="submit" value="Submit">
 </form>
+</body>
+</html>
+<script type="text/javascript" src="./page.js" ></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -82,5 +99,3 @@
   ga('send', 'pageview');
 
 </script>
-</body>
-</html>
