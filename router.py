@@ -29,21 +29,21 @@ class success:
 class fail:
     def GET(self):
         web.header('Content-Type', 'text/html; charset=UTF-8')
-        return u'出错了，我也不知道怎么回事，如果你想，可以发邮件到classone2010@gmail.com抱怨。'.encode('utf-8')
+        return u'出错了，如果你想，可以发邮件到classone2010@gmail.com抱怨。'.encode('utf-8')
 
 class submit:
     def POST(self):
         room = self.check(web.input())
         print(room)
-        #try:
-        balance = monitor.check_balance(room)
-        sendmail(room.email, u'{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
-                 u'电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
-                )
-        room.save()
-        #except Exception, e:
-        #    web.SeeOther('/fail')
-        #    return
+        try:
+            balance = monitor.check_balance(room)
+            sendmail(room.email, u'{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
+                     u'电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
+                    )
+            room.save()
+        except Exception, e:
+            web.SeeOther('/fail')
+            return
         web.SeeOther('/success')
     def check(self,inputs):
         try:
