@@ -37,7 +37,10 @@ class Monitor(Webdumper):
         cursor = Room.find()
         cursor = cursor.batch_size(5)
         for room in cursor:
-            if room.has_key('last_check') and time.utcnow() - room.last_check < datetime.timedelta(days=1):
+            if room.has_key('last_check'):
+                if time.utcnow() - room.last_check >= datetime.timedelta(days=1):
+                    self.check_balance(room)
+            else:
                 self.check_balance(room)
     def check_balance(self,rooms):
         if isinstance(rooms,list):
