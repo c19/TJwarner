@@ -88,7 +88,10 @@ class Monitor(Webdumper):
         self.validers = {valider: self._get_valider(valider) for valider in self.validers.keys()}
 
 monitor = Monitor()
-myroom = { "threshold" : 10, "addrindex" : u"322四平校区西南八楼    ",
+"""myroom = { "threshold" : 10, "addrindex" : u"322四平校区西南八楼    ",
            "addr" : { "BuildingDown" : u"西南八楼    ", u"RoomnameText" : "322", "DistrictDown" : u"四平校区" },
            "email" : "classone2010@gmail.com" }
 myroom = Room(myroom)
+"""
+if __name__ == '__main__':
+    monitor.check_all()
