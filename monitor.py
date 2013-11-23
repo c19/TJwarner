@@ -33,12 +33,12 @@ class Monitor(Webdumper):
         html = super(Monitor, self).get(url, data)
         self.get_validers()
         return html
-    def check_all(self):
+    def check_all(self, delay=6):
         cursor = Room.find()
         cursor = cursor.batch_size(5)
         for room in cursor:
-            if room.has_key('last_check'):
-                if time.utcnow() - room.last_check >= datetime.timedelta(days=1):
+            if room.has_key('last_check') and :
+                if time.utcnow() - room.last_check >= datetime.timedelta(hours=delay):
                     self.check_balance(room)
             else:
                 self.check_balance(room)
@@ -94,4 +94,4 @@ monitor = Monitor()
 myroom = Room(myroom)
 """
 if __name__ == '__main__':
-    monitor.check_all()
+    monitor.check_all(0)
