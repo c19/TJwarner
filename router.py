@@ -9,12 +9,20 @@ from monitor  import monitor
 from sendmail import sendmail
 import pdb
 
+from uwsgidecorators import *
+
 urls = (
         '/', 'index',  #only for testing
         '/submit', 'submit',
         '/success', 'success',
         '/fail', 'fail',
         )
+
+@cron(40,-1,-1,-1,-1)
+def check_all(*arg, **kwarg):
+    print("check_all")
+    monitor.check_all(0)
+    print("check_all Done")
 
 class index:
     def GET(self):
@@ -36,11 +44,14 @@ class submit:
         room = self.check(web.input())
         print(room)
         try:
+            yield("checking ...")
             balance = monitor.check_balance(room)
+            yield("sending mail...")
             sendmail(room.email, u'{0}{1}电量剩余{2} Kwh'.format(room.addr['BuildingDown'], room.addr['RoomnameText'], balance),
                      u'电量低于{0}时将发送提示邮件到此邮箱。'.format(room.threshold)
                     )
             room.save()
+            yield("done, check your email.")
         except Exception, e:
             web.SeeOther('/fail')
             return

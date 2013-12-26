@@ -42,7 +42,7 @@ class Room(Document):
         self['addrindex'] = ''.join(sorted(self['addr'].values()))
     def save(self, key=None):
         self.add_addrindex()
-        self.validate()
+        #self.validate()
         if not key: key = {'addrindex': self['addrindex']}
         self.collection.update(key, self, upsert=True, check_keys=False, safe=False, manipulate=False)
 Room = connection.Room

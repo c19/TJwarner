@@ -33,6 +33,9 @@ class Monitor(Webdumper):
         html = super(Monitor, self).get(url, data)
         self.get_validers()
         return html
+    def check(self,addr):
+        room = Room.find({"addrindex":addr}).next()
+        self.check_balance(room)
     def check_all(self, delay=6):
         cursor = Room.find()
         cursor = cursor.batch_size(5)
@@ -66,7 +69,7 @@ class Monitor(Webdumper):
             balance = cells[3]
             balance = float(balance)
             if balance < rooms.threshold:
-                sendmail(rooms.email, '{0}{1}快没电费啦！！！'.format(rooms.addr['BuildingDown'],rooms.addr['RoomnameText']), '还剩{0}Kwh =w='.format(balance))
+                sendmail(rooms.email, u'{0}{1}快没电费啦！！！'.format(rooms.addr['BuildingDown'],rooms.addr['RoomnameText']), u'还剩{0}Kwh =w='.format(balance))
             rooms['balance'] = balance
             rooms['last_check'] = time.utcnow()
             rooms.save()
@@ -94,4 +97,4 @@ monitor = Monitor()
 myroom = Room(myroom)
 """
 if __name__ == '__main__':
-    monitor.check_all(0)
+    monitor.check_all()
