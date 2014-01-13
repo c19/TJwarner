@@ -36,7 +36,7 @@ class Monitor(Webdumper):
     def check(self,addr):
         room = Room.find({"addrindex":addr}).next()
         self.check_balance(room)
-    def check_all(self, delay=6):
+    def check_all(self, delay=121212121212121212121212):
         cursor = Room.find()
         cursor = cursor.batch_size(5)
         for room in cursor:

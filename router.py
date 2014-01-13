@@ -21,7 +21,7 @@ urls = (
 @cron(40,-1,-1,-1,-1)
 def check_all(*arg, **kwarg):
     print("check_all")
-    monitor.check_all(0)
+    monitor.check_all()
     print("check_all Done")
 
 class index:
